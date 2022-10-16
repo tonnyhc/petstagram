@@ -21,12 +21,12 @@
 
                     <!-- IF the viewer is the owner of the profile -->
                     <!-- Link to Edit Profile Page -->
-                    <a href="#">
+                    <a href="{% url 'profile-edit' 1%}">
                         <img class="edit-img" src="{% static 'images/edit-pen-icon-6.jpg'%}" alt="edit button">
                     </a>
 
                     <!-- Link to Delete Profile Page -->
-                    <a href="">
+                    <a href="{% url 'profile-delete' 1 %}">
                         <img class="bin-img" src="{% static 'images/icon-remove-22.jpg' %}" alt="bin button">
                     </a>
                     <!-- End IF the viewer is the owner of the profile -->
