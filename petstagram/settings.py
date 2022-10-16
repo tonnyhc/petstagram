@@ -62,10 +62,15 @@ WSGI_APPLICATION = 'petstagram.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'petstagram-db',  # database name
+        'USER': 'postgres-user',  # postgres user
+        'PASSWORD': 'password',  # postgres password
+        'HOST': '127.0.0.1',  # postgres host
+        'PORT': '5432',  # postgres port
     }
 }
+
 
 
 # Password validation
