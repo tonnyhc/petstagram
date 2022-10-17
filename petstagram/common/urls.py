@@ -1,8 +1,10 @@
 from django.urls import path
 
 from petstagram.common import views
-from petstagram.common.views import home_page
+from petstagram.common.views import index, like_photo, share_photo
 
 urlpatterns = [
-    path('', home_page, name= 'home-page')
+    path('', index, name= 'home-page'),
+    path('like/<int:photo_id>/', like_photo, name = 'like photo'),
+    path('share/<int:photo_id>/', share_photo, name = 'share photo')
 ]
