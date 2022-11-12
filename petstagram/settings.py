@@ -1,6 +1,8 @@
 import os.path
 from pathlib import Path
 
+from django.urls import reverse_lazy
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-d9!m4^m-o6@nib&7)%!-@!0ajhvp*l1l5o10es0)&$w6o+g(_s'
@@ -115,3 +117,5 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
 AUTH_USER_MODEL = 'accounts.PetstagramUser'
+LOGIN_URL = 'accounts/login'
+LOGIN_REDIRECT_URL = reverse_lazy('home-page')
