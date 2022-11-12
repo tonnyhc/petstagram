@@ -75,17 +75,18 @@
             <h1>Petstagram</h1>
 
             <!-- Start Register Form -->
-            <form action="">
-                <input type="text" placeholder="Username">
-
-                <input type="email" placeholder="Email">
-
-                <input type="password" placeholder="Password">
-
-                <input type="password" placeholder="Repeat Password">
-
+            <form method="post" action="{% url 'register' %}">
+                {{ form.username }}
+                {{ form.username.errors }}
+                {{ form.email }}
+                {{ form.email.errors }}
+                {{ form.password1 }}
+                {{ form.password1.errors }}
+                {{ form.password2 }}
+                {{ form.password2.errors }}
                 <!-- Register Button -->
                 <button type="submit">Register</button>
+                {% csrf_token %}
             </form>
             <!-- End Register Form -->
 
