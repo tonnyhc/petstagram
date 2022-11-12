@@ -47,3 +47,6 @@ class PetstagramUser(auth_models.AbstractUser):
         choices = Gender.choices(),
         max_length= Gender.max_len()
     )
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"

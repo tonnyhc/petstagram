@@ -6,7 +6,7 @@
 
             <!-- Start Searchbar Form -->
             <form class="searchbar" method="post">
-                {{search_form}}
+                {{ search_form }}
                 <button>
                     <img src="{% static 'images/search.png' %}" height="18" alt="img2">
                 </button>
@@ -23,20 +23,28 @@
                     <div class="top">
                         <div class="userDetails">
                             <!-- Link to User Profile Page -->
-                            <a href="{% url 'profile-details' pk=1 %}">
+                            <a href="{% url 'profile-details' pk=photo.user.pk %}">
                                 <div class="profilepic">
                                     <div class="profile_img">
                                         <div class="image">
-                                            <img src=" {% static 'images/person.png' %}" alt="img8">
+                                            {% if photo.user.profile_picture %}
+                                                <img src="{{ photo.user.profile_picture }}" alt="img8">
+                                            {% else %}
+                                                <img src=" {% static 'images/person.png' %}" alt="img8">
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
                             </a>
                             <h3>
-                                <!-- Link to User Profile Page -->
-                                <a href="{% url 'profile-details' pk=1 %}">
+
+                                <a href="{% url 'profile-details' pk=photo.user.pk %}">
                                     <!-- if user has first name and last name -->
-                                    Diyan Kalaydzhiev
+                                    {% if photo.use.first_name and photo.user.last_name %}
+                                        {{ user.str }}
+                                    {% else %}
+                                        {{ photo.user.username }}
+                                    {% endif %}
                                     <!-- else -->
                                     <!-- show user username -->
                                 </a>
@@ -64,7 +72,8 @@
                                 <span class="heart">
 									<a href="{% url 'like photo' photo_id=photo.pk %}">
 										<!-- if user has liked the photo -->
-                                        {% if photo.is_liked_by_user %}
+
+                                        {% if photo.id in all_liked_photos_by_request_user %}
                                             <svg style="color: red"
                                                  xmlns="http://www.w3.org/2000/svg"
                                                  width="24"
@@ -135,7 +144,7 @@
                         <!-- Start Tagged Pets -->
                         {% for pet in photo.tagged_pets.all %}
                             {# TODO:change username when actual name is available #}
-                            <a href="{% url 'details pet' username='doncho' pet_slug=pet.slug %}">
+                            <a href="{% url 'details pet' username=pet.user.username pet_slug=pet.slug %}">
                                 <p class="message">
                                     <b>{{ pet.name }}</b>
                                 </p>

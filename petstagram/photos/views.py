@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from petstagram.common.forms import CommentForm
@@ -5,10 +6,13 @@ from petstagram.photos.forms import PhotoCreateForm, PhotoEditForm
 from petstagram.photos.models import Photo
 
 
+@login_required
 def add_photo(request):
     form = PhotoCreateForm(request.POST or None, request.FILES or None)
     if form.is_valid():
-        form.save()
+        photo = form.save(commit=False)
+        photo.save()
+        form.save_m2m()
         return redirect('home-page')
     context = {
         'form':form

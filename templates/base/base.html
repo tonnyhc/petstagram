@@ -4,8 +4,8 @@
 <!-- Starts Head Section -->
 <head>
     <link rel="stylesheet"
-          href="{% static 'css/styles.css'%}">
-    <link rel="icon" type="image/x-icon" href="{% static 'images/free-30-instagram-stories-icons23_122570.png'%}">
+          href="{% static 'css/styles.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/free-30-instagram-stories-icons23_122570.png' %}">
     <title>Petstagram</title>
 </head>
 <body>
@@ -15,7 +15,8 @@
             <div class="logo">
 
                 <a href="{% url 'home-page' %}">
-                    <img width="50px" src="{% static 'images/free-30-instagram-stories-icons23_122570.png'%}" alt="img1">
+                    <img width="50px" src="{% static 'images/free-30-instagram-stories-icons23_122570.png' %}"
+                         alt="img1">
                 </a>
 
                 <a class="home" href="{% url 'home-page' %}">
@@ -36,17 +37,30 @@
                             <i>Add Photo</i>
                         </a>
                     </li>
+                    {% if not request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <a href="{% url 'register' %}">
+                                <i>Register</i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'login' %}">
+                                <i>Login</i>
+                            </a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a href="{% url 'profile-details' pk=request.user.pk %}">
-                            <i>Profile</i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{% url 'logout' %}">
-                            <i>Logout</i>
-                        </a>
-                    </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a href="{% url 'profile-details' pk=request.user.pk %}">
+                                <i>Profile</i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'logout' %}">
+                                <i>Logout</i>
+                            </a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

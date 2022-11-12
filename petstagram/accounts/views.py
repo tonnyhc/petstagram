@@ -8,6 +8,7 @@ from petstagram.accounts.forms import PetstagramUserCreateForm, SignInForm, Pets
 
 UserModel = get_user_model()
 
+
 class SignUpView(views.CreateView):
     model = UserModel
     form_class = PetstagramUserCreateForm
@@ -28,15 +29,24 @@ class EditProfileView(views.UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('profile-details', kwargs={
-            'pk':self.object.pk
+            'pk': self.object.pk
         })
+
 
 class SignOutView(auth_views.LogoutView):
     next_page = reverse_lazy('home-page')
 
+class UserDeleteView(views.DeleteView):
+    model = UserModel
+    template_name =  'accounts/profile-delete-page.html'
+    next_page = reverse_lazy('home-page')
+
+    def post(self, *args, pk):
+        self.request.user.delete()
+
+
 def show_profile_details(request, pk):
     return render(request, 'accounts/profile-details-page.html')
 
-
-def delete_profile(request, pk):
-    return render(request, 'accounts/profile-delete-page.html')
+# def delete_profile(request, pk):
+#     return render(request, 'accounts/profile-delete-page.html')
