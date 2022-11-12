@@ -29,11 +29,27 @@ class SignInForm(auth_forms.AuthenticationForm):
     )
 
     password = forms.CharField(
-        strip = False,
-        widget = forms.PasswordInput(
+        strip=False,
+        widget=forms.PasswordInput(
             attrs={
                 'autocomplete': 'current-password',
                 'placeholder': 'Password',
             },
         ),
     )
+
+
+class PetstagramUserEditForm(forms.ModelForm):
+    class Meta:
+        model = UserModel
+        fields = ('username', 'first_name', 'last_name', 'email', 'profile_picture', 'gender')
+        exclude = ('password',)
+        labels = {
+            'username': 'Username',
+            'first_name': 'First name',
+            'last_name': 'Last name',
+            'email': 'Email',
+            'profile_picture': 'Profile picture',
+            'gender': 'Gender',
+
+        }

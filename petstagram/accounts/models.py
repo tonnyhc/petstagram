@@ -38,6 +38,10 @@ class PetstagramUser(auth_models.AbstractUser):
         max_length=MAX_LEN_LAST_NAME,
         validators=[validators.MinLengthValidator(MIN_LEN_LAST_NAME)]
     )
+    profile_picture = models.URLField(
+        blank=True,
+        null=True,
+    )
 
     gender = models.CharField(
         choices = Gender.choices(),
