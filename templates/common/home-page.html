@@ -6,10 +6,11 @@
 
             <!-- Start Searchbar Form -->
             <form class="searchbar" method="post">
-                <input type="text" placeholder="Search by pet name...">
+                {{search_form}}
                 <button>
                     <img src="{% static 'images/search.png' %}" height="18" alt="img2">
                 </button>
+                {% csrf_token %}
             </form>
             <!-- End Searchbar Form -->
 
@@ -159,11 +160,10 @@
                                 </h3>
                             </div>
                             <!-- Start Add Comments Form -->
-                            <form method="post" action="#">
-                                <label for="id_body">Body:</label>
-                                <textarea name="body" cols="40" rows="10" placeholder="Add comment..." maxlength="300"
-                                          required="" id="id_body"></textarea>
+                            <form method="post" action="{% url 'comment photo' photo_id=photo.pk %}">
+                                {{ comment_form }}
                                 <button type="submit">Post</button>
+                                {% csrf_token %}
                             </form>
                             <!-- End Add Comments Form -->
 

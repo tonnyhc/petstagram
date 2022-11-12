@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 
+from petstagram.common.forms import CommentForm
 from petstagram.pets.forms import PetForm, PetDeleteForm
 from petstagram.pets.models import Pet
 from petstagram.pets.utils import get_pet_by_slug_and_username
@@ -23,7 +24,7 @@ def details_pet(request, username, pet_slug):
     context = {
         'pet': pet,
         'photos_count': pet.photo_set.count(),
-        'pet_photos': pet.photo_set.all()
+        'pet_photos': pet.photo_set.all(),
     }
 
     return render(
