@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
@@ -5,6 +6,8 @@ from petstagram.common.forms import CommentForm
 from petstagram.pets.forms import PetForm, PetDeleteForm
 from petstagram.pets.models import Pet
 from petstagram.pets.utils import get_pet_by_slug_and_username
+
+UserModel = get_user_model()
 
 @login_required
 def add_pet(request):
@@ -23,11 +26,14 @@ def add_pet(request):
 
 def details_pet(request, username, pet_slug):
     pet = get_pet_by_slug_and_username(pet_slug, username)
+    owner = UserModel.objects.get(username=username)
+    is_owner = [True if request.user.pk == owner.pk else False]
 
     context = {
         'pet': pet,
         'photos_count': pet.photo_set.count(),
         'pet_photos': pet.photo_set.all(),
+        'is_owner': is_owner
     }
 
     return render(

@@ -33,6 +33,6 @@ class Photo(models.Model):
     )
 
     user = models.ForeignKey(
-        to= UserModel,
-        on_delete=models.CASCADE
+        UserModel,
+        on_delete=models.RESTRICT
     )

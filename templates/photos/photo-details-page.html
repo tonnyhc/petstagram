@@ -12,49 +12,49 @@
                     <div class="userDetails">
 
                         <!-- Link to User Profile Details Page-->
-                        <a href="#">
+                        <a href="{% url 'profile-details' photo.user.pk %}">
                             <div class="profilepic">
                                 <div class="profile_img">
                                     <div class="image">
-                                        <img src="{% static 'images/person.png' %}" alt="img8">
+                                        {% if photo.user.profile_picture %}
+                                            <img src="{{ photo.user.profile_picture }}" alt="img8">
+                                        {% else %}
+                                            <img src="{% static 'images/person.png' %}" alt="img8">
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
                         </a>
                         <h3>
-                            {# TODO: when auth #}
-                            <!-- Link to User Profile Details Page -->
-                            <a href="#">
-                                <!-- IF user has first name and last name -->
-                                Diyan Kalaydzhiev
-                                <!-- else -->
-                                <!-- show user username -->
+                            <a href="{% url 'profile-details' photo.user.pk %}">
+                                {% if photo.user.str %}
+                                    {{ photo.user.str }}
+                                {% else %}
+                                    {{ photo.user.username }}
+                                {% endif %}
                             </a>
                             <br>
                             {% if photo.location %}
-                                <!-- IF the photo has location -->
                                 <span>{{ photo.location }}</span>
                             {% endif %}
-                            <!-- IF the viewer is the creator of the photo -->
-                            <div class="edit-delete-btns">
 
-                                <!-- Link to Edit Pet Photo Page -->
-                                <a href="{% url 'edit photo' pk=photo.pk %}">
-                                    <img class="edit-img" src="{% static 'images/edit-pen-icon-6.jpg' %}"
-                                         alt="edit button">
-                                </a>
+                            {% if photo.user.pk == request.user.pk %}
+                                <div class="edit-delete-btns">
 
-                                <!-- Link to Delete Pet Photo Page -->
-                                <a href="{% url 'delete photo' 5 %}">
-                                    <img class="bin-img" src="{% static 'images/icon-remove-22.jpg' %}"
-                                         alt="bin button">
-                                </a>
-                            </div>
-                            <!-- End IF the viewer is the creator of the photo -->
+                                    <a href="{% url 'edit photo' pk=photo.pk %}">
+                                        <img class="edit-img" src="{% static 'images/edit-pen-icon-6.jpg' %}"
+                                             alt="edit button">
+                                    </a>
+
+                                    <a href="{% url 'delete photo' pk=photo.pk %}">
+                                        <img class="bin-img" src="{% static 'images/icon-remove-22.jpg' %}"
+                                             alt="bin button">
+                                    </a>
+                                </div>
+                            {% endif %}
 
                         </h3>
                     </div>
-                    <!-- End User Details and Image Location Section -->
 
                 </div>
 

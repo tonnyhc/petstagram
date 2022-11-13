@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.contrib.auth import views as auth_views, get_user_model
 
 from petstagram.accounts.forms import PetstagramUserCreateForm, SignInForm, PetstagramUserEditForm
+from petstagram.pets.models import Pet
 
 UserModel = get_user_model()
 
@@ -36,17 +37,31 @@ class EditProfileView(views.UpdateView):
 class SignOutView(auth_views.LogoutView):
     next_page = reverse_lazy('home-page')
 
+
 class UserDeleteView(views.DeleteView):
     model = UserModel
-    template_name =  'accounts/profile-delete-page.html'
+    template_name = 'accounts/profile-delete-page.html'
     next_page = reverse_lazy('home-page')
 
     def post(self, *args, pk):
         self.request.user.delete()
 
 
-def show_profile_details(request, pk):
-    return render(request, 'accounts/profile-details-page.html')
+class ProfileDetailsView(views.DetailView):
+    model = UserModel
+    template_name = 'accounts/profile-details-page.html'
 
-# def delete_profile(request, pk):
-#     return render(request, 'accounts/profile-delete-page.html')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['is_owner'] = self.request.user == self.object
+        context['pets_count'] = self.object.pet_set.count()
+
+        photos = self.object.photo_set \
+            .prefetch_related('like_set')
+
+        context['photos_count'] = photos.count()
+        context['likes_count'] = sum(x.like_set.count() for x in photos)
+        context['pets'] = self.object.pet_set.all()
+
+        return context
